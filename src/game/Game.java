@@ -30,10 +30,9 @@ public class Game {
 		while(!gameExit){
 			logic();
 			render();
-			if(Display.isCloseRequested() || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
-				render.CleanUp();
+			
+			if(Display.isCloseRequested() || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
 				gameExit = true;
-			}
 		//	System.out.println("update!");
 		}
 		render.CleanUp();
