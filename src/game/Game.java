@@ -71,7 +71,7 @@ public class Game {
 	}
 	
 	private static float newFloat(){
-		float increment = 1;
+		float increment = 10;
 		float temp = render.random.nextFloat()*increment;
 		if(render.random.nextBoolean())
 			return temp;
@@ -96,7 +96,7 @@ public class Game {
 			render.createQuad(balls[i].getX(), balls[i].getY(), balls[i].getWidth(), balls[i].getHeight(), balls[i].red, balls[i].green, balls[i].blue, 1);
 		}
 //		render.createQuad(ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight(), newFloat(), newFloat(), newFloat(), 1);
-		render.drawString("balls : " + balls.length, DW/2, 10);
+		render.drawString("Balls : " + balls.length, 10, 10);
 		render.afterRender();
 	}
 }

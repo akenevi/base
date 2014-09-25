@@ -3,8 +3,6 @@ package util;
 import static org.lwjgl.opengl.ARBTextureRectangle.GL_TEXTURE_RECTANGLE_ARB;
 import static org.lwjgl.opengl.GL11.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -20,7 +18,7 @@ import org.lwjgl.opengl.DisplayMode;
 
 public class Renderer implements Runnable{
 	private HashMap<String, Sprite> spriteMap;
-	private final String fontLocation = "/res/font.png"; //http://opengameart.org/content/16x12-terminal-bitmap-font
+	private final String fontLocation = "/res/pixfont.png"; //http://opengameart.org/content/16x12-terminal-bitmap-font
 	private Sprite curSprite;
 	private int tex;
 	public Random random;
@@ -97,7 +95,7 @@ public class Renderer implements Runnable{
 			u=curSprite.x2;
 			u2=curSprite.x;
 		}
-//		glPushMatrix();
+		glPushMatrix();
 		
 		glTranslatef(x,y,0);
 		glRotatef(rotate,0,0,1);
@@ -115,7 +113,7 @@ public class Renderer implements Runnable{
 			glEnd();
 		}
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
-//		glPopMatrix();
+		glPopMatrix();
 	}
 	
 	public void drawShakingString(String string, float x, float y, float magnitude){
@@ -151,8 +149,7 @@ public class Renderer implements Runnable{
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texture);
 		InputStream in = null;
 		try {
-//			in = getClass().getResourceAsStream(location); 
-			in = new FileInputStream(location);
+			in = getClass().getResourceAsStream(location); 
 			PNGDecoder decoder = new PNGDecoder(in);
 			ByteBuffer buffer = BufferUtils.createByteBuffer(4 * decoder.getWidth() * decoder.getHeight());
 			decoder.decode(buffer, decoder.getWidth() * 4, PNGDecoder.Format.RGBA);
@@ -161,7 +158,7 @@ public class Renderer implements Runnable{
 			glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA, decoder.getWidth(), decoder.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-		} catch (FileNotFoundException e) {
+		} catch (NullPointerException e) {
 			System.err.println("File couldn't be found at "+ location);
 		} catch (IOException e) {
 			System.err.println("File couldn't be loaded from "+ location);
